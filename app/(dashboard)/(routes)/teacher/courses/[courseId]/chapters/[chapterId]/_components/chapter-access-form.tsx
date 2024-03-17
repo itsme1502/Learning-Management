@@ -93,7 +93,7 @@ export const ChapterAccessForm = ({
           {initialData.isFree ? (
             <>This chapter is free for preview.</>
           ) : (
-            <>This chapter is not free.</>
+            <>This chapter is not free for preview.</>
           )}
         </p>
       )}
