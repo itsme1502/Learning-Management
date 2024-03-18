@@ -41,8 +41,7 @@ export const ChapterActions = ({
         toast.success("Chapter published");
       }
       router.refresh();
-      router.push(`/teacher/courses/${courseId}`)
-      router.refresh();
+  
     } catch {
       toast.error("Something went wrong");
     } finally {
