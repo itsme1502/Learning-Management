@@ -1,13 +1,12 @@
-import { NavBarRoutes } from "@/components/navbar-routes"
-import { MobileNavBar } from "./mobileNavBar"
+import { NavbarRoutes } from "@/components/navbar-routes";
 
+import { MobileSidebar } from "./mobile-sidebar";
 
-
-export const NavBar = () => {
-    return (
-        <div className="p-4 border-b h-16 flex items-center bg-white shadow-sm">
-            <MobileNavBar/>
-            <NavBarRoutes/>
-        </div>
-    )
-}
+export const Navbar = () => {
+  return (
+    <div className="p-4 border-b h-full flex items-center bg-white shadow-sm">
+      <MobileSidebar />
+      <NavbarRoutes />
+    </div>
+  );
+};

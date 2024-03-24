@@ -5,6 +5,7 @@ import { IconType } from "react-icons";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 import { cn } from "@/lib/utils";
+import { title } from "process";
 
 interface CategoryItemProps {
   label: string;
@@ -23,6 +24,9 @@ export const CategoryItem = ({
 
   const currentCategoryId = searchParams.get("categoryId");
   const currentTitle = searchParams.get("title");
+
+  
+  
 
   const isSelected = currentCategoryId === value;
 
