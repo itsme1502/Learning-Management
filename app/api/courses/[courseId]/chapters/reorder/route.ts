@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 
 import { db } from "@/lib/db";
 import { it } from "node:test";
+import { isTeacher } from "@/lib/teacher";
 
 export async function PUT(
   req: Request,
@@ -11,7 +12,7 @@ export async function PUT(
   try {
     const { userId } = auth();
 
-    if (!userId) {
+    if (!userId || !isTeacher(userId)) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 

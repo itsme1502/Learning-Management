@@ -2,6 +2,7 @@ import Mux from "@mux/mux-node";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
+import { isTeacher } from "@/lib/teacher";
 
 const { video } = new Mux({
   tokenId: process.env.MUX_TOKEN_ID,
@@ -16,8 +17,9 @@ export async function PATCH(
     try {
       
         const {userId} = auth();
+         const isAuthorized = isTeacher(userId);
 
-        if(!userId){
+        if(!userId || !isAuthorized){
             return new NextResponse("Unauthorized", {status : 401});
         }
 
