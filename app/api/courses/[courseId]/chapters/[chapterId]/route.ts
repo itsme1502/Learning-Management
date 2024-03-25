@@ -22,10 +22,10 @@ export async function PATCH(
     }
 
     const ownCourse = await db.course.findUnique({
-        where: {
+      where: {
         id: params.courseId,
         userId: userId,
-        },
+      },
     });
 
     if (!ownCourse) {
@@ -60,7 +60,7 @@ export async function PATCH(
 
       const asset = await video.assets.create({
         input: values.videoUrl,
-        // playback_policy: "public",
+        playback_policy: ["public"],
         test: false,
       });
 
