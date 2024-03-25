@@ -11,8 +11,8 @@ export async function POST(
 
         const {userId} = auth();
         const {url} = await req.json();
-        if (!userId || !isTeacher(userId)) {
-          return new NextResponse("Unauthozied User", { status: 401 });
+        if(!userId || !isTeacher(userId)){
+            return new NextResponse("Unauthozied User" , {status : 401});
         }
 
         const courseOwner = await db.course.findUnique({

@@ -17,8 +17,7 @@ export async function POST(
     if (
       !user ||
       !user.id ||
-      !user.emailAddresses?.[0]?.emailAddress ||
-      !isTeacher(userId)
+      !user.emailAddresses?.[0]?.emailAddress
     ) {
       return new NextResponse("Unauthorized", { status: 401 });
     }

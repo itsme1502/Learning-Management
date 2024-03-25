@@ -17,9 +17,9 @@ export async function PATCH(
     try {
       
         const {userId} = auth();
-         const isAuthorized = isTeacher(userId);
+        
 
-        if(!userId || !isAuthorized){
+        if(!userId || !isTeacher(userId)){
             return new NextResponse("Unauthorized", {status : 401});
         }
 
@@ -51,7 +51,7 @@ export async function DELETE(
   try {
     const { userId } = auth();
 
-    if (!userId) {
+    if (!userId || !isTeacher(userId)) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
