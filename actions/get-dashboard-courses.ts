@@ -36,9 +36,15 @@ export const getDashboardCourses = async (
       },
     });
 
+    // console.log(purchasedCourses,"purchasedCourses");
+    
+
     const courses = purchasedCourses.map(
       (purchase) => purchase.course
     ) as CourseWithProgressWithCategory[];
+
+    // console.log(typeof courses);
+    
 
     for (let course of courses) {
       const progress = await getProgress(userId, course.id);
@@ -63,4 +69,41 @@ export const getDashboardCourses = async (
       coursesInProgress: [],
     };
   }
+};
+
+type CourseWithCategory = Course & {
+  category: Category;
+  chapters: Chapter[];
+};
+
+type publicDashboardCourses = {
+  courses: CourseWithCategory[];
+};
+
+
+
+export const allCourses = async  () : Promise<publicDashboardCourses> =>{
+    try {
+      const courses = await db.course.findMany({
+        include: {
+          category: true,
+          chapters: {
+            where: {
+              isPublished: true,
+            },
+          },
+        },
+      });
+      const newcourses = courses.filter((course) => course.chapters.length>0  ) as CourseWithCategory[];
+      
+      
+      return {
+        courses : newcourses
+      }
+    } catch (error) {
+      console.log("[COURSE FETCHING ERROR]", error);
+      return {
+        courses : [],
+      };
+    }
 };

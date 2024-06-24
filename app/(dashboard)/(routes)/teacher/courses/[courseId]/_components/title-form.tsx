@@ -35,7 +35,7 @@ const formSchema = z.object({
 export const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
-  const toggleEdit = () => setIsEditing((current) => !current);
+  const toggleEdit = () => setIsEditing((isEditing) => !isEditing);
 
   const router = useRouter();
 

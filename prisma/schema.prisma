@@ -21,7 +21,6 @@ model Course {
 
   categoryId String?
   category Category? @relation(fields: [categoryId], references: [id])
-
   chapters Chapter[]
   attachments Attachment[]
   purchases Purchase[]

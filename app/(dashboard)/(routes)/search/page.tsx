@@ -27,7 +27,7 @@ const SearchPage = async ({
     });
 
     if(!userId){
-        return redirect("/");
+        return redirect("/sign-in");
     }
 
     const courses = await getCourses({

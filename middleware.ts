@@ -1,8 +1,20 @@
-import { authMiddleware } from "@clerk/nextjs";
+import { NextResponse } from "next/server";
+import { authMiddleware, redirectToSignIn } from "@clerk/nextjs/server";
+
  
 export default authMiddleware({
+
+  afterAuth(auth,req,res){
+    if(!auth.userId && !auth.isPublicRoute){
+        return redirectToSignIn({ returnBackUrl: req.url });
+    }
+    if(auth.userId && !auth.isPublicRoute){
+        return NextResponse.next();
+    }
+    return NextResponse.next();
+  },
   // Routes that can be accessed while signed out
-  publicRoutes: ["/api/uploadthing","/api/webhook"],
+  publicRoutes: ["/api/uploadthing","/api/webhook","/"],
   // Routes that can always be accessed, and have
   // no authentication information
   ignoredRoutes: ["/no-auth-in-this-route"],
