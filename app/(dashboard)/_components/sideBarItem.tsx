@@ -17,10 +17,10 @@ export const SideBarItem = ({
     ,href}
     :  SideBarItemProps
     ) => {
-        const pathname = usePathname(); 
-        const router = useRouter();
+      const pathname = usePathname(); 
+      const router = useRouter();
 
-        const isActive = 
+      const isActive = 
         (pathname==="/" && href=="/") || pathname==href || pathname?.startsWith(`${href}/`);
 
         const onClick = () => {

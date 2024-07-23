@@ -23,8 +23,7 @@ export const CourseEnrollButton = ({
       setIsLoading(true);
 
       const response = await axios.post(`/api/courses/${courseId}/checkout`);
-
-      window.location.assign(response.data.url);
+      window.open(response.data.url, "_blank"); // Open URL in a new tab
     } catch {
       toast.error("Something went wrong");
     } finally {
