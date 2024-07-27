@@ -1,11 +1,12 @@
 "use client";
 
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/format";
+import { useRouter } from "next/navigation";
 
 interface CourseEnrollButtonProps {
   price: number;
@@ -17,19 +18,39 @@ export const CourseEnrollButton = ({
   courseId,
 }: CourseEnrollButtonProps) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [paymentWindow, setPaymentWindow] = useState<Window | null>(null);
+  const router = useRouter();
 
   const onClick = async () => {
     try {
       setIsLoading(true);
-
       const response = await axios.post(`/api/courses/${courseId}/checkout`);
-      window.open(response.data.url, "_blank"); // Open URL in a new tab
+      const newWindow = window.open(
+        response.data.url,
+        "_blank",
+        "location=yes,height=570,width=520,scrollbars=yes,status=yes"
+      );
+      setPaymentWindow(newWindow);
     } catch {
       toast.error("Something went wrong");
     } finally {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    // Polling interval
+    const checkWindowClosed = setInterval(() => {
+      if (paymentWindow && paymentWindow.closed) {
+        clearInterval(checkWindowClosed);
+        window.location.reload();
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(checkWindowClosed);
+    };
+  }, [paymentWindow]);
 
   return (
     <Button
